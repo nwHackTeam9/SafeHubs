@@ -8,21 +8,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 @IgnoreExtraProperties
-public class Place {
-    private double lat;
-    private double lng;
+public class PlaceReviews {
+    private Double lat;
+    private Double lng;
+    private Double avg_rating;
     private String name;
-    private int num_reviews;
+    private Long num_reviews;
 
-    public Place() {
+    public PlaceReviews() {
 
     }
 
-    public double getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public double getLng() {
+    public Double getLng() {
         return lng;
     }
 
@@ -30,8 +31,12 @@ public class Place {
         return name;
     }
 
-    public int getNum_reviews() {
+    public Long getNum_reviews() {
         return num_reviews;
+    }
+
+    public Double getAvg_rating() {
+        return avg_rating;
     }
 
     @Exclude
@@ -41,7 +46,7 @@ public class Place {
         result.put("lng", lng);
         result.put("name", name);
         result.put("num_reviews", num_reviews);
-
+        result.put("avg_review", avg_rating);
         return result;
     }
 }

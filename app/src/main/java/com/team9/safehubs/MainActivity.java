@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity
                                                     placeRef.child("lat").setValue(lat);
                                                     placeRef.child("lng").setValue(lng);
                                                     placeRef.child("num_reviews").setValue(0);
+                                                    placeRef.child("avg_rating").setValue(0.0);
                                                 }
                                             }
 
