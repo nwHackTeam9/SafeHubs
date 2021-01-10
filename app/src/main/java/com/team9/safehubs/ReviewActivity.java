@@ -2,32 +2,43 @@ package com.team9.safehubs;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ReviewActivity extends AppCompatActivity {
+import com.google.android.libraries.places.api.model.Place;
 
+public class ReviewActivity extends AppCompatActivity {
     private float rating1 = 0, rating2 = 0, rating3 = 0, rating4 = 0, avgRating = 0;
     private String additional_comments;
     private boolean isRated1 = false, isRated2 = false, isRated3 = false, isRated4 = false;
+    private Place place;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
+        Intent intent = getIntent();
+        String placeID = intent.getStringExtra("place_id");
+        String placeName = intent.getStringExtra("place_name");
 
+        TextView txtReview = findViewById(R.id.txtReview);
         RatingBar ratingBar1 = findViewById(R.id.RatingBar1);
         RatingBar ratingBar2 = findViewById(R.id.RatingBar2);
         RatingBar ratingBar3 = findViewById(R.id.RatingBar3);
         RatingBar ratingBar4 = findViewById(R.id.RatingBar4);
         EditText additionalComments = findViewById(R.id.additionalComments);
         Button submitButton = findViewById(R.id.submitButton);
+
+        txtReview.setText("Review " + placeName);
 
         ratingBar1.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override

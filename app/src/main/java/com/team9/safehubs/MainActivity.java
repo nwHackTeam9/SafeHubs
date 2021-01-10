@@ -50,7 +50,8 @@ public class MainActivity extends AppCompatActivity
     private FirebaseDatabase database;
     private Button btnWriteReview;
     private Button btnReadReviews;
-    private Place selectedPlace;
+    private String selectedPlaceID;
+    private String selectedPlaceName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 Intent reviewActivity = new Intent(MainActivity.this, ReviewActivity.class);
-                reviewActivity.putExtra("place", selectedPlace); //Optional parameters
+                reviewActivity.putExtra("place_id", selectedPlaceID); //Optional parameters
+                reviewActivity.putExtra("place_name", selectedPlaceName);
                 startActivity(reviewActivity);
             }
         });
@@ -102,9 +104,11 @@ public class MainActivity extends AppCompatActivity
                             @Override
                             public void onResponse(JSONObject response) {
                                 try {
-                                    JSONObject location = response.getJSONObject("result")
-                                            .getJSONObject("geometry").getJSONObject("location");
+                                    JSONObject result = response.getJSONObject("result");
+                                    JSONObject location = result.getJSONObject("geometry")
+                                            .getJSONObject("location");
 
+                                    String name = result.getString("name");
                                     Double lat = location.getDouble("lat");
                                     Double lng = location.getDouble("lng");
                                     LatLng latLng = new LatLng(lat, lng);
@@ -116,8 +120,9 @@ public class MainActivity extends AppCompatActivity
                                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,
                                                 10f));
 
-                                        // Set the selected place to be the place (used to pass intents)
-                                        selectedPlace = place;
+                                        // Set the selected place information for the intent
+                                        selectedPlaceID = place.getId();
+                                        selectedPlaceName = name;
 
                                         // Add to database
                                         DatabaseReference placeRef = database
@@ -148,7 +153,8 @@ public class MainActivity extends AppCompatActivity
                                             @Override
                                             public boolean onMarkerClick(Marker marker) {
                                                 Intent reviewActivity = new Intent(MainActivity.this, ReviewActivity.class);
-                                                reviewActivity.putExtra("place", selectedPlace); //Optional parameters
+                                                reviewActivity.putExtra("place_id", selectedPlaceID); //Optional parameters
+                                                reviewActivity.putExtra("place_name", selectedPlaceName);
                                                 startActivity(reviewActivity);
                                                 return false;
                                             }
