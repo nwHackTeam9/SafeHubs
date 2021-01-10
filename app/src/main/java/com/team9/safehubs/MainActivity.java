@@ -2,10 +2,13 @@ package com.team9.safehubs;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,6 +22,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -30,14 +34,19 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity
-        implements OnMapReadyCallback {
+        implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap map;
+    Marker marker;
+    double lat, lng;
     private FirebaseDatabase database;
     Button buttonWriteReview;
     String placeName = "";
@@ -57,6 +66,7 @@ public class MainActivity extends AppCompatActivity
         buttonWriteReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("PLACE NAME: " + placeName);
                 Intent reviewActivity = new Intent(MainActivity.this, ReviewActivity.class);
                 reviewActivity.putExtra("place_name", placeName); //Optional parameters
                 startActivity(reviewActivity);
@@ -71,6 +81,16 @@ public class MainActivity extends AppCompatActivity
                     context.getString(R.string.api_key));
         }
 
+//        map.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+//            @Override
+//            public void onMapClick(LatLng latLng) {
+//                if(marker == null) {
+//                    marker = map.addMarker(new MarkerOptions().draggable(true).position(latLng));
+//                } else {
+//                    marker.setPosition(latLng);
+//                }
+//            }
+//        });
         // Initialize the AutocompleteSupportFragment.
         AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
@@ -99,10 +119,10 @@ public class MainActivity extends AppCompatActivity
                                     if (latLng != null) {
                                         map.addMarker(new MarkerOptions()
                                                 .position(latLng)
+                                                .draggable(true)
                                                 .title(place.getName()));
                                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,
                                                 10f));
-
                                         // Add to database
                                         DatabaseReference placeRef = database
                                                 .getReference("places/" + place.getId());
@@ -144,9 +164,72 @@ public class MainActivity extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         LatLng sydney = new LatLng(-33.852, 151.211);
-        googleMap.addMarker(new MarkerOptions()
+        map.addMarker(new MarkerOptions()
                 .position(sydney)
-                .title("Marker in Sydney"));
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 10f));
+                .draggable(true)
+                .title(getAddress(sydney.latitude, sydney.longitude)));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 10f));
+        map.getUiSettings().setZoomControlsEnabled(true);
+
+        googleMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDrag(Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+                LatLng latLng = marker.getPosition();
+                lat = latLng.latitude;
+                lng = latLng.longitude;
+
+                Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
+                try {
+                    android.location.Address address = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1).get(0);
+                    marker.setTitle(getAddress(lat, lng));
+                    placeName = getAddress(lat, lng);    //address.getLocality();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public String getAddress(double lat, double lng) {
+        Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
+        String add = "";
+        try {
+            List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+            Address obj = addresses.get(0);
+            add = obj.getAddressLine(0);
+            add = add + "\n" + obj.getCountryName();
+            add = add + "\n" + obj.getCountryCode();
+            add = add + "\n" + obj.getAdminArea();
+            add = add + "\n" + obj.getPostalCode();
+            add = add + "\n" + obj.getSubAdminArea();
+            add = add + "\n" + obj.getLocality();
+            add = add + "\n" + obj.getSubThoroughfare();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        return add;
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+
+        System.out.println("PLACE NAME: " + placeName);
+        Intent reviewActivity = new Intent(MainActivity.this, ReviewActivity.class);
+        reviewActivity.putExtra("place_name", placeName); //Optional parameters
+        startActivity(reviewActivity);
+
+        return false;
     }
 }

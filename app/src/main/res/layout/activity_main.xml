@@ -18,7 +18,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/mapView"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="446dp"
+        android:layout_width="match_parent"
         android:layout_height="608dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/autocomplete_fragment"
