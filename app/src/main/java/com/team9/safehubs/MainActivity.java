@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void configureReviewsButton() {
-        Button nextButton = (Button) findViewById(R.id.btnDashboard);
+        Button nextButton = (Button) findViewById(R.id.btnReadReviews);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

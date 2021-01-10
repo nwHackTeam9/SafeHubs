@@ -26,10 +26,10 @@
         tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
 
     <Button
-        android:id="@+id/btnDashboard"
+        android:id="@+id/btnReadReviews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dashboard"
+        android:text="See Reviews"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -37,10 +37,10 @@
         android:id="@+id/btnReviews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reviews"
+        android:text="Write a Review"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnProfile"
-        app:layout_constraintStart_toEndOf="@+id/btnDashboard" />
+        app:layout_constraintStart_toEndOf="@+id/btnReadReviews" />
 
     <Button
         android:id="@+id/btnProfile"
