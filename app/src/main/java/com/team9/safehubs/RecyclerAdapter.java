@@ -51,7 +51,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             place_name = (TextView) itemView.findViewById(R.id.place_name);
-            avgRating = (TextView) itemView.findViewById(R.id.avgRating);
+            avgRating = (TextView) itemView.findViewById(R.id.txtRating);
             date_time = (TextView) itemView.findViewById(R.id.date_time);
 
             linearLayout = (LinearLayout) itemView.findViewById(R.id.reviewLinearLayout);

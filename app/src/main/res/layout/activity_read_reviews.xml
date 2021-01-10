@@ -12,10 +12,9 @@
         android:id="@+id/toolbar">
 
         <TextView
-            android:id="@+id/my_review"
+            android:id="@+id/txtSummary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="My Reviews"
             android:textSize="23sp"
             android:textStyle="bold"></TextView>
     </Toolbar>

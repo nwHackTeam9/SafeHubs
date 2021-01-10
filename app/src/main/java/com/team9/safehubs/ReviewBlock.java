@@ -1,6 +1,11 @@
 package com.team9.safehubs;
 
 public class ReviewBlock {
+    private String place_name;
+    private float avgRating;
+    private String date_time;
+    private String additionalComment;
+
     public String getPlace_name() {
         return place_name;
     }
@@ -17,14 +22,6 @@ public class ReviewBlock {
         this.avgRating = avgRating;
     }
 
-    public String getDate_time() {
-        return date_time;
-    }
-
-    public void setDate_time(String date_time) {
-        this.date_time = date_time;
-    }
-
     public String getAdditionalComment() {
         return additionalComment;
     }
@@ -33,15 +30,9 @@ public class ReviewBlock {
         this.additionalComment = additionalComment;
     }
 
-    public ReviewBlock(String place_name, float avgRating, String date_time, String additionalComment) {
+    public ReviewBlock(String place_name, float avgRating, String additionalComment) {
         this.place_name = place_name;
         this.avgRating = avgRating;
-        this.date_time = date_time;
         this.additionalComment = additionalComment;
     }
-
-    String place_name;
-    float avgRating;
-    String date_time;
-    String additionalComment;
 }
