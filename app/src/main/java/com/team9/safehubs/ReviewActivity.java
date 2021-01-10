@@ -15,17 +15,25 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.libraries.places.api.model.Place;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ReviewActivity extends AppCompatActivity {
     private float rating1 = 0, rating2 = 0, rating3 = 0, rating4 = 0, avgRating = 0;
     private String additional_comments;
     private boolean isRated1 = false, isRated2 = false, isRated3 = false, isRated4 = false;
-    private Place place;
+    private FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
+
+        database = FirebaseDatabase.getInstance();
+
         Intent intent = getIntent();
         String placeID = intent.getStringExtra("place_id");
         String placeName = intent.getStringExtra("place_name");
@@ -83,14 +91,38 @@ public class ReviewActivity extends AppCompatActivity {
                                 avgRating = (rating1 + rating2 + rating3 + rating4) / 4;
                                 additional_comments = additionalComments.getText().toString();
 
+                                DatabaseReference placeRef = database
+                                        .getReference("places/" + placeID);
+                                placeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        Object place = dataSnapshot.getValue();
+                                        Log.d("fetchdebug", place.toString());
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+                                        Log.e("onDataChange", "The read failed: " + databaseError.getCode());
+                                    }
+                                });
+                                DatabaseReference numReviewsRef = placeRef.child("num_reviews");
+//                                numReviewsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                    @Override
+//                                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                                        Integer numReviews = Integer.parseInt(dataSnapshot.getValue().toString());
+//                                        Log.e("fetchdata", String.valueOf(numReviews));
+//                                        numReviewsRef.setValue(numReviews + 1);
+//                                    }
+//
+//                                    @Override
+//                                    public void onCancelled(DatabaseError databaseError) {
+//                                        Log.e("onDataChange", "The read failed: " + databaseError.getCode());
+//                                    }
+//                                });
+
                                 new AlertDialog.Builder(ReviewActivity.this)
                                         .setTitle("Review Submitted")
                                         .setMessage("Average Rating: " + String.valueOf(avgRating))
-                                        .setPositiveButton("Close", new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                finish();
-                                            }
-                                        })
                                         .setIcon(R.drawable.ic_baseline_done_24)
                                         .show();
 

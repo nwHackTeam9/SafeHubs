@@ -71,8 +71,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        // Write a message to the database
         database = FirebaseDatabase.getInstance();
+
         RequestQueue queue = Volley.newRequestQueue(this);
         Context context = this.getApplicationContext();
         String key = context.getString(R.string.api_key);
@@ -138,8 +138,7 @@ public class MainActivity extends AppCompatActivity
                                                     placeRef.child("name").setValue(place.getName());
                                                     placeRef.child("lat").setValue(lat);
                                                     placeRef.child("lng").setValue(lng);
-                                                } else {
-                                                    Log.d("changeevent", data.toString());
+                                                    placeRef.child("num_reviews").setValue(0);
                                                 }
                                             }
 
