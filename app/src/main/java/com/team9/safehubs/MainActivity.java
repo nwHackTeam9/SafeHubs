@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
     private FirebaseDatabase database;
     private Button btnWriteReview;
     private Button btnReadReviews;
-    private String placeName = "";
+    private Place selectedPlace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +63,8 @@ public class MainActivity extends AppCompatActivity
         btnWriteReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("PLACE NAME: " + placeName);
                 Intent reviewActivity = new Intent(MainActivity.this, ReviewActivity.class);
-                reviewActivity.putExtra("place_name", placeName); //Optional parameters
+                reviewActivity.putExtra("place", selectedPlace); //Optional parameters
                 startActivity(reviewActivity);
             }
         });
@@ -117,6 +116,9 @@ public class MainActivity extends AppCompatActivity
                                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,
                                                 10f));
 
+                                        // Set the selected place to be the place (used to pass intents)
+                                        selectedPlace = place;
+
                                         // Add to database
                                         DatabaseReference placeRef = database
                                                 .getReference("places/" + place.getId());
@@ -142,6 +144,15 @@ public class MainActivity extends AppCompatActivity
                                             }
                                         });
 
+                                        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                            @Override
+                                            public boolean onMarkerClick(Marker marker) {
+                                                Intent reviewActivity = new Intent(MainActivity.this, ReviewActivity.class);
+                                                reviewActivity.putExtra("place", selectedPlace); //Optional parameters
+                                                startActivity(reviewActivity);
+                                                return false;
+                                            }
+                                        });
                                         btnWriteReview.setEnabled(true);
                                         btnReadReviews.setEnabled(true);
                                     }
@@ -177,19 +188,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        LatLng vancouver = new LatLng(49.2827, 123.1207);
+        LatLng vancouver = new LatLng(49.2827, -123.1207);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(vancouver, 10f));
-
-        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                Log.e("markerclick", "Marker was clicked");
-                System.out.println("PLACE NAME: " + placeName);
-                Intent reviewActivity = new Intent(MainActivity.this, ReviewActivity.class);
-                reviewActivity.putExtra("place_name", placeName); //Optional parameters
-                startActivity(reviewActivity);
-                return false;
-            }
-        });
     }
 }
