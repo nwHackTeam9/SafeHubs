@@ -1,38 +1,27 @@
 package com.team9.safehubs;
 
 public class ReviewBlock {
-    private String place_name;
-    private double avgRating;
-    private String date_time;
-    private String additionalComment;
+    private double rating;
+    private String text;
 
-    public String getPlace_name() {
-        return place_name;
+    public double getRating() {
+        return rating;
     }
 
-    public void setPlace_name(String place_name) {
-        this.place_name = place_name;
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 
-    public double getAvgRating() {
-        return avgRating;
+    public String getText() {
+        return text;
     }
 
-    public void setAvgRating(double avgRating) {
-        this.avgRating = avgRating;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public String getAdditionalComment() {
-        return additionalComment;
-    }
-
-    public void setAdditionalComment(String additionalComment) {
-        this.additionalComment = additionalComment;
-    }
-
-    public ReviewBlock(double avgRating, String additionalComment) {
-        this.place_name = place_name;
-        this.avgRating = avgRating;
-        this.additionalComment = additionalComment;
+    public ReviewBlock(double rating, String text) {
+        this.rating = rating;
+        this.text = text;
     }
 }

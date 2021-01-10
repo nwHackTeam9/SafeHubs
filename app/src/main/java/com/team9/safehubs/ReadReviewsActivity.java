@@ -54,8 +54,15 @@ public class ReadReviewsActivity extends AppCompatActivity {
                             .getValue().toString());
                     String text = dataSnapshot.child("reviews/" + i.toString() + "/text").getValue().toString();
 
+                    Log.e("ratingandtext", rating.toString() + " " + text);
                     reviewBlockList.add((new ReviewBlock(rating, text)));
                 }
+
+                recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+                adapter = new RecyclerAdapter(reviewBlockList);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(ReadReviewsActivity.this));
+                recyclerView.setAdapter(adapter);
 
                 txtSummary.setText(name + ": " + avgRating.toString() + " (" + numReviews.toString() + " reviews)");
             }
@@ -73,11 +80,5 @@ public class ReadReviewsActivity extends AppCompatActivity {
 //        reviewBlockList.add(new ReviewBlock("place6", (float) 3.9, "addit.comment6"));
 //        reviewBlockList.add(new ReviewBlock("place7", (float) 4.5, "addit.comment7"));
 //        reviewBlockList.add(new ReviewBlock("place8", (float) 5.0, ""));
-
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        adapter = new RecyclerAdapter(reviewBlockList);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
     }
 }

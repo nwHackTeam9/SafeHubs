@@ -30,8 +30,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.avgRating.setText(String.valueOf(myReviewList.get(holder.getAdapterPosition()).getAvgRating()));
-        holder.textComment.setText(String.valueOf(myReviewList.get(holder.getAdapterPosition()).getAdditionalComment()));
+        holder.avgRating.setText(String.valueOf(myReviewList.get(holder.getAdapterPosition()).getRating()));
+        holder.textComment.setText(String.valueOf(myReviewList.get(holder.getAdapterPosition()).getText()));
     }
 
     @Override
