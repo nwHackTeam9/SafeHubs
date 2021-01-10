@@ -6,15 +6,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class ReadReviewsActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    RecyclerAdapter adapter;
-    List<ReviewBlock> reviewBlockList = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private RecyclerAdapter adapter;
+    private List<ReviewBlock> reviewBlockList = new ArrayList<>();
+    private FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
