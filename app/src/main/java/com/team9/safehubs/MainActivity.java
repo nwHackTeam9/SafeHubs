@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
-    private void configureProfileButton() {
+    public void configureProfileButton() {
         Button nextButton = (Button) findViewById(R.id.btnProfile);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
