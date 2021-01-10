@@ -127,4 +127,6 @@ public class MainActivity extends AppCompatActivity
                 .title("Marker in Sydney"));
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 10f));
     }
+
+
 }
