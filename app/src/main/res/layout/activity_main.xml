@@ -25,21 +25,21 @@
         tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
 
     <Button
-        android:id="@+id/btnDashboard"
+        android:id="@+id/btnWriteReview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dashboard"
+        android:text="Write Review"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnReviews"
+        android:id="@+id/btnReview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reviews"
+        android:text="Review"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnProfile"
-        app:layout_constraintStart_toEndOf="@+id/btnDashboard" />
+        app:layout_constraintStart_toEndOf="@+id/btnWriteReview" />
 
     <Button
         android:id="@+id/btnProfile"

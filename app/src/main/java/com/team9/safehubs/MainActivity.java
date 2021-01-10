@@ -20,11 +20,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.NotNull;
@@ -38,12 +41,15 @@ public class MainActivity extends AppCompatActivity
         implements OnMapReadyCallback {
 
     private GoogleMap map;
+    private FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Write a message to the database
+        database = FirebaseDatabase.getInstance();
         RequestQueue queue = Volley.newRequestQueue(this);
         Context context = this.getApplicationContext();
         String key = context.getString(R.string.api_key);
@@ -88,6 +94,14 @@ public class MainActivity extends AppCompatActivity
                                                 .title(place.getName()));
                                         map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,
                                                 10f));
+
+                                        // Add to database
+                                        DatabaseReference placeRef = database
+                                                .getReference("places/" + place.getId());
+                                        placeRef.child("name").setValue(place.getName());
+                                        placeRef.child("lat").setValue(lat);
+                                        placeRef.child("lng").setValue(lng);
+                                        placeRef.get().getResult().getValue();
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
