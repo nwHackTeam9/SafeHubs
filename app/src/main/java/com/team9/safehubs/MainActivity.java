@@ -71,6 +71,16 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        btnReadReviews.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent reviewActivity = new Intent(MainActivity.this, ReadReviewsActivity.class);
+                reviewActivity.putExtra("place_id", selectedPlaceID); //Optional parameters
+                reviewActivity.putExtra("place_name", selectedPlaceName);
+                startActivity(reviewActivity);
+            }
+        });
+
         database = FirebaseDatabase.getInstance();
 
         RequestQueue queue = Volley.newRequestQueue(this);
