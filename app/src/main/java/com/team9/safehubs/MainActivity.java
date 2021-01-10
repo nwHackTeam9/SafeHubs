@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -42,11 +43,16 @@ public class MainActivity extends AppCompatActivity
 
     private GoogleMap map;
     private FirebaseDatabase database;
+    private Button btnWriteReview;
+    private Button btnReadReviews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        btnWriteReview = findViewById(R.id.btnWriteReview);
+        btnReadReviews = findViewById(R.id.btnReadReviews);
 
         // Write a message to the database
         database = FirebaseDatabase.getInstance();
@@ -101,7 +107,9 @@ public class MainActivity extends AppCompatActivity
                                         placeRef.child("name").setValue(place.getName());
                                         placeRef.child("lat").setValue(lat);
                                         placeRef.child("lng").setValue(lng);
-                                        placeRef.get().getResult().getValue();
+
+                                        btnWriteReview.setEnabled(true);
+                                        btnReadReviews.setEnabled(true);
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();

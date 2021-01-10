@@ -28,15 +28,17 @@
         android:id="@+id/btnWriteReview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:enabled="false"
         android:text="Write Review"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnReview"
+        android:id="@+id/btnReadReviews"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Review"
+        android:enabled="false"
+        android:text="Read Reviews"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnProfile"
         app:layout_constraintStart_toEndOf="@+id/btnWriteReview" />
