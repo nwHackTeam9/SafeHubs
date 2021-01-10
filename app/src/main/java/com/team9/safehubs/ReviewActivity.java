@@ -13,9 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ReviewActivity extends AppCompatActivity {
 
-    float rating1 = 0, rating2 = 0, rating3 = 0, rating4 = 0, avgRating = 0;
-    String additional_comments;
-    boolean isRated1 = false, isRated2 = false, isRated3 = false, isRated4 = false;
+    private float rating1 = 0, rating2 = 0, rating3 = 0, rating4 = 0, avgRating = 0;
+    private String additional_comments;
+    private boolean isRated1 = false, isRated2 = false, isRated3 = false, isRated4 = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
