@@ -29,8 +29,10 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
 
 import org.json.JSONException;
@@ -104,9 +106,27 @@ public class MainActivity extends AppCompatActivity
                                         // Add to database
                                         DatabaseReference placeRef = database
                                                 .getReference("places/" + place.getId());
-                                        placeRef.child("name").setValue(place.getName());
-                                        placeRef.child("lat").setValue(lat);
-                                        placeRef.child("lng").setValue(lng);
+
+                                        // Check if value exists already or is null
+                                        placeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                Object data = dataSnapshot.getValue();
+
+                                                if (data == null) {
+                                                    placeRef.child("name").setValue(place.getName());
+                                                    placeRef.child("lat").setValue(lat);
+                                                    placeRef.child("lng").setValue(lng);
+                                                } else {
+                                                    Log.d("changeevent", data.toString());
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
+                                                Log.e("onDataChange", "The read failed: " + databaseError.getCode());
+                                            }
+                                        });
 
                                         btnWriteReview.setEnabled(true);
                                         btnReadReviews.setEnabled(true);
