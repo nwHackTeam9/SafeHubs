@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RemoteViews;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         configureProfileButton();
+        configureReviewsButton();
 
         RequestQueue queue = Volley.newRequestQueue(this);
         Context context = this.getApplicationContext();
@@ -120,6 +122,7 @@ public class MainActivity extends AppCompatActivity
         mapFragment.getMapAsync(this);
     }
 
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
@@ -141,6 +144,17 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
+    private void configureReviewsButton() {
+        Button nextButton = (Button) findViewById(R.id.btnDashboard);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ReadReviews.class));
+            }
+        });
+    }
+
 
 
 
