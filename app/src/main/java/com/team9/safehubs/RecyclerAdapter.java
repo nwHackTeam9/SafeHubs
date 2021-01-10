@@ -30,9 +30,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.place_name.setText(myReviewList.get(holder.getAdapterPosition()).place_name);
-        holder.avgRating.setText(String.valueOf(myReviewList.get(holder.getAdapterPosition()).avgRating));
-        holder.date_time.setText(myReviewList.get(holder.getAdapterPosition()).date_time);
+        holder.avgRating.setText(String.valueOf(myReviewList.get(holder.getAdapterPosition()).getAvgRating()));
+        holder.textComment.setText(String.valueOf(myReviewList.get(holder.getAdapterPosition()).getAdditionalComment()));
     }
 
     @Override
@@ -42,17 +41,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView place_name;
         public TextView avgRating;
-        public TextView date_time;
+        public TextView textComment;
 
         public LinearLayout linearLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            place_name = (TextView) itemView.findViewById(R.id.place_name);
             avgRating = (TextView) itemView.findViewById(R.id.txtRating);
-            date_time = (TextView) itemView.findViewById(R.id.date_time);
+            textComment = (TextView) itemView.findViewById(R.id.textText);
 
             linearLayout = (LinearLayout) itemView.findViewById(R.id.reviewLinearLayout);
         }

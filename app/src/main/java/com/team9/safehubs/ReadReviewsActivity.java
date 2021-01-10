@@ -5,10 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,6 +13,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class ReadReviewsActivity extends AppCompatActivity {
@@ -53,10 +53,11 @@ public class ReadReviewsActivity extends AppCompatActivity {
                     Double rating = Double.parseDouble(dataSnapshot.child("reviews/" + i.toString() + "/rating")
                             .getValue().toString());
                     String text = dataSnapshot.child("reviews/" + i.toString() + "/text").getValue().toString();
+
+                    reviewBlockList.add((new ReviewBlock(rating, text)));
                 }
 
-                txtSummary.setText(name + ": " + avgRating.toString() + " (" +
-                        numReviews.toString() + " reviews)");
+                txtSummary.setText(name + ": " + avgRating.toString() + " (" + numReviews.toString() + " reviews)");
             }
 
             @Override
@@ -65,13 +66,13 @@ public class ReadReviewsActivity extends AppCompatActivity {
             }
         });
 
-        reviewBlockList.add(new ReviewBlock("place2", (float) 3.0, "addit.comment2"));
-        reviewBlockList.add(new ReviewBlock("place3", (float) 4.0, ""));
-        reviewBlockList.add(new ReviewBlock("place4", (float) 3.2, ""));
-        reviewBlockList.add(new ReviewBlock("place5", (float) 3.1, ""));
-        reviewBlockList.add(new ReviewBlock("place6", (float) 3.9, "addit.comment6"));
-        reviewBlockList.add(new ReviewBlock("place7", (float) 4.5, "addit.comment7"));
-        reviewBlockList.add(new ReviewBlock("place8", (float) 5.0, ""));
+//        reviewBlockList.add(new ReviewBlock("place2", (float) 3.0, "addit.comment2"));
+//        reviewBlockList.add(new ReviewBlock("place3", (float) 4.0, ""));
+//        reviewBlockList.add(new ReviewBlock("place4", (float) 3.2, ""));
+//        reviewBlockList.add(new ReviewBlock("place5", (float) 3.1, ""));
+//        reviewBlockList.add(new ReviewBlock("place6", (float) 3.9, "addit.comment6"));
+//        reviewBlockList.add(new ReviewBlock("place7", (float) 4.5, "addit.comment7"));
+//        reviewBlockList.add(new ReviewBlock("place8", (float) 5.0, ""));
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         adapter = new RecyclerAdapter(reviewBlockList);
