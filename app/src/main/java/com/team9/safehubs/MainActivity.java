@@ -3,8 +3,10 @@ package com.team9.safehubs;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
 import com.android.volley.Request;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity
     private FirebaseDatabase database;
     private Button btnWriteReview;
     private Button btnReadReviews;
+    private String placeName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,16 @@ public class MainActivity extends AppCompatActivity
 
         btnWriteReview = findViewById(R.id.btnWriteReview);
         btnReadReviews = findViewById(R.id.btnReadReviews);
+
+        btnWriteReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("PLACE NAME: " + placeName);
+                Intent reviewActivity = new Intent(MainActivity.this, ReviewActivity.class);
+                reviewActivity.putExtra("place_name", placeName); //Optional parameters
+                startActivity(reviewActivity);
+            }
+        });
 
         // Write a message to the database
         database = FirebaseDatabase.getInstance();
