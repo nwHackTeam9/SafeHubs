@@ -179,7 +179,10 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onMarkerDrag(Marker marker) {
-
+                LatLng latLng = marker.getPosition();
+                lat = latLng.latitude;
+                lng = latLng.longitude;
+//                marker.setTitle(getAddress(lat,lng));
             }
 
             @Override
@@ -196,6 +199,18 @@ public class MainActivity extends AppCompatActivity
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                System.out.println("PLACE NAME: " + placeName);
+                Intent reviewActivity = new Intent(MainActivity.this, ReviewActivity.class);
+                reviewActivity.putExtra("place_name", placeName); //Optional parameters
+                startActivity(reviewActivity);
+                return false;
             }
         });
     }
