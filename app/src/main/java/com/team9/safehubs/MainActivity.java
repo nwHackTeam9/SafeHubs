@@ -48,7 +48,9 @@ public class MainActivity extends AppCompatActivity
     Marker marker;
     double lat, lng;
     private FirebaseDatabase database;
+    DatabaseReference mDatabase;
     Button buttonWriteReview;
+    Button buttonMyReview;
     String placeName = "";
 
     @Override
@@ -62,6 +64,10 @@ public class MainActivity extends AppCompatActivity
         Context context = this.getApplicationContext();
         String key = context.getString(R.string.api_key);
         buttonWriteReview = findViewById(R.id.btnWriteReview);
+        buttonMyReview = findViewById(R.id.btnReview);
+
+        mDatabase = FirebaseDatabase.getInstance().getReference("review");//Dont pass any path if you want root of the tree
+
 
         buttonWriteReview.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +76,14 @@ public class MainActivity extends AppCompatActivity
                 Intent reviewActivity = new Intent(MainActivity.this, ReviewActivity.class);
                 reviewActivity.putExtra("place_name", placeName); //Optional parameters
                 startActivity(reviewActivity);
+            }
+        });
+
+        buttonMyReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myReviewActivity = new Intent(MainActivity.this, MyReviewActivity.class);
+                startActivity(myReviewActivity);
             }
         });
         /**

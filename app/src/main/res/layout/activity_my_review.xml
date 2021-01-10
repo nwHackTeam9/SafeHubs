@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MyReviewActivity"
+    android:orientation="vertical">
+
+    <Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar">
+
+        <TextView
+            android:id="@+id/my_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My Reviews"
+            android:textSize="23sp"
+            android:textStyle="bold"></TextView>
+    </Toolbar>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="4dp"
+        android:layout_margin="3dp"
+        android:scrollbars="vertical"
+        android:id="@+id/recyclerView"
+        tools:context=".MyReviewActivity" />
+</LinearLayout>

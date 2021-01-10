@@ -2,6 +2,8 @@ package com.team9.safehubs;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,12 +11,15 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ReviewActivity extends AppCompatActivity {
 
     float rating1 = 0, rating2 = 0, rating3 = 0, rating4 = 0, avgRating = 0;
     String additional_comments;
+    String date_time;
     boolean isRated1 = false, isRated2 = false, isRated3 = false, isRated4 = false;
 
     @Override
@@ -71,6 +76,9 @@ public class ReviewActivity extends AppCompatActivity {
                             if (isRated4) {
                                 avgRating = (rating1 + rating2 + rating3 + rating4) / 4;
                                 additional_comments = additionalComments.getText().toString();
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                    date_time = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(Calendar.getInstance().getTime());
+                                }
 
                                 new AlertDialog.Builder(ReviewActivity.this)
                                         .setTitle("Review Submitted")
