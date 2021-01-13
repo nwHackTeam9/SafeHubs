@@ -92,8 +92,7 @@ public class MainActivity extends AppCompatActivity
          * environment we recommend using a secure mechanism to manage API keys.
          */
         if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(),
-                    context.getString(R.string.api_key));
+            Places.initialize(getApplicationContext(), key);
         }
 
         // Initialize the AutocompleteSupportFragment.
